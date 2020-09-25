@@ -1,0 +1,58 @@
+.event {
+    width: 300px;
+    margin: 0 auto;
+    margin-top: 5px;
+    padding: 5px;
+
+    display: flex;
+    flex-direction: column;
+
+    border: 1px solid lightgray;
+    border-radius: 5px;
+}
+
+.event p {
+    font-weight: bold;
+}
+
+.event span {
+    margin-top: 5px;
+}
+
+.event input {
+    width: calc(100%-8px);
+    font-size: 1em;
+
+    margin-top: 5px;
+    padding: 4px;
+
+    border: 1px solid lightgray;
+    border-radius: 5px;
+}
+
+.event__buttons {
+    width: 100%;
+    padding-top: 5px;
+    margin-top: 5px;
+    text-align: center;
+    border-top: 1px solid lightgray;
+}
+
+.event__buttons button {
+    padding: 5px;
+    margin: 0 2px;
+    background: white;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    transition: 0.5s linear;
+}
+
+.event__buttons button:hover {
+    background: #009e6c;
+    color: white;
+    transition: 0.5s ease-in-out;
+}
+
+.event__buttons button:active {
+    background: rgb(0, 110, 70);
+}
