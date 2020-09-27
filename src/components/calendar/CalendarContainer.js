@@ -1,28 +1,35 @@
 import React from 'react';
 import Calendar from './Calendar';
 import useCalendar from '../../hooks/useCalendar';
-import EventContainer from '../event/EventContainer';
-import { activateEditMode, deactivateEditMode, addNewEvent, deleteEvent, setEventInEdit } from '../../redux/calendarReducer';
+import Event from '../event/Event';
+import { activateEditMode, deactivateEditMode, addNewEvent, deleteEvent } from '../../redux/calendarReducer';
 import { connect } from 'react-redux';
+import EventItem from "../event/EventItem";
 
 class CalendarContainer extends React.Component {
-    componentDidUpdate() {
-        this.props.currentEvents.find((event) => {
-            if (event.eventDate === this.props.eventDate) {
-                this.props.setEventInEdit(event)
-            }
-        })
+    componentDidMount() {
+        this.props.deactivateEditMode()
     }
 
     render = () => {
         return (
             <>
-                <Calendar useCalendar={useCalendar} activateEditMode={this.props.activateEditMode} />
+                <Calendar useCalendar={useCalendar} currentEvents={this.props.currentEvents} activateEditMode={this.props.activateEditMode}
+                    deactivateEditMode={this.props.deactivateEditMode}
+                />
                 {!this.props.editMode ? null
-                    : <EventContainer isEventNew={this.props.isEventNew} activateEditMode={this.props.activateEditMode} deactivateEditMode={this.props.deactivateEditMode}
+                    : <Event activateEditMode={this.props.activateEditMode} deactivateEditMode={this.props.deactivateEditMode}
                         addNewEvent={this.props.addNewEvent} eventDate={this.props.eventDate} currentEvents={this.props.currentEvents}
-                        deleteEvent={this.props.deleteEvent} eventInEdit={this.props.eventInEdit}
+                        deleteEvent={this.props.deleteEvent}
                     />}
+
+                {
+                    this.props.currentEvents.filter((event) => {
+                        return event.eventDate === this.props.eventDate
+                    }).map((event, index) => (
+                        <EventItem event={event} key={event.id} deleteEvent={this.props.deleteEvent} />
+                    ))
+                }
             </>
         )
     }
@@ -31,15 +38,12 @@ class CalendarContainer extends React.Component {
 let mapStateToProps = (state) => ({
     editMode: state.calendar.editMode,
     eventDate: state.calendar.eventDate,
-    isEventNew: state.calendar.isEventNew,
-    currentEvents: state.calendar.currentEvents,
-    eventInEdit: state.calendar.eventInEdit
+    currentEvents: state.calendar.currentEvents
 })
 
 export default connect(mapStateToProps, {
     activateEditMode,
     deactivateEditMode,
     addNewEvent,
-    deleteEvent,
-    setEventInEdit
+    deleteEvent
 })(CalendarContainer);

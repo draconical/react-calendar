@@ -73,6 +73,15 @@
     background-color: #009e6c;
     color: #fff;
 }
+
+.event-day {
+    border: 1px solid red;
+    color: red;
+}
+
+.selected {
+    background: lightgray;
+}
   
 .in-prev-month,
 .in-next-month {
